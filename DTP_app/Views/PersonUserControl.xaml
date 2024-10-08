@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="DTP_app.Views.PersonUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTP_app.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Storyboard x:Key="ShowDataGridStoryboard">
+            <DoubleAnimation 
+            Storyboard.TargetName="DataGridBorder" 
+            Storyboard.TargetProperty="Opacity" 
+            From="0" To="1" Duration="0:0:1.5" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid  HorizontalAlignment="Center">
+        <DataGrid ItemsSource="{Binding People }" SelectedItem="{Binding Path=SelectedPerson}" 
+            Name="Peoples" 
+            SelectionMode="Single" 
+            AutoGenerateColumns="False"
+                   MaxWidth="800"                
+                  Width="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Passport ID" Binding="{Binding PassportId}" Width="*"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
+                <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}" Width="*"/>
+                <DataGridTextColumn Header="Registration Address" Binding="{Binding RegistrationAdress}" Width="*"/>
+            </DataGrid.Columns>
+
+            <DataGrid.ContextMenu>
+                <ContextMenu  Opened="ContextMenu_Opened">
+                    <Separator />
+                    <Border Width="300" Height="200" x:Name="DataGridBorder" Opacity="0">
+                        <DataGrid ItemsSource="{Binding selectedPersonAccidents}" 
+                            AutoGenerateColumns="True" IsReadOnly="True"/>
+                    </Border>
+                    
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+
+
+    </Grid>
+</UserControl>

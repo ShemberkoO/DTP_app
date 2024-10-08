@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="DTP_app.Views.VictimsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTP_app.Views"
+             xmlns:Converter="clr-namespace:DTP_app.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Converter:VictimsStatusConverter x:Key="my:VictimsStatusConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- Встановлюємо Margin для вирівнювання по центру -->
+        <DataGrid ItemsSource="{Binding Victims}" 
+                  Name="Peoples" 
+                  SelectionMode="Single"
+                  AutoGenerateColumns="False" 
+                  SelectedItem="{Binding Path=SelectedVictim}"
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Stretch" 
+                  MaxWidth="800"
+            Width="Auto">
+            <!-- Дозволяємо ширині адаптуватись -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="PassportId" Binding="{Binding Path=PassportId, Mode=TwoWay}" Width="*" />
+                <DataGridTextColumn Header="AccidentId" Binding="{Binding Path=AccidentId, Mode=TwoWay}" Width="*" />
+                <DataGridTemplateColumn Header="Status" Width="48">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Width="48" Height="48" Source="{Binding Status, Mode=TwoWay, Converter={StaticResource my:VictimsStatusConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Change Status" Command="{Binding ChangeVictimStatus}"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+    </Grid>
+</UserControl>
